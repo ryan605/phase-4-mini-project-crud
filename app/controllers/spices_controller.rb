@@ -10,6 +10,26 @@ class SpicesController < ApplicationController
       render json: spices, status: :created
     end
 
+    def update
+        spices = Spice.find_by(id: params[:id])
+        if spices
+            spices.update(spices_params)
+            render json: spices
+        else
+            render json: { error: "Spice not found" }, status: :not_found
+        end
+    end
+
+    def destroy
+        spice = Spice.find_by(id: params[:id])
+        if spice
+            spice.destroy
+            render json: {}
+        else
+            render json: { error: "Spice not found" }, status: :not_found
+        end
+    end
+
     private
 
     def spices_params
